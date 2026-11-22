@@ -1,56 +1,68 @@
-# Welcome to your Expo app 👋
+# ExpGaming
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+App móvil de reseñas de videojuegos. Permite explorar un catálogo de juegos, ver el detalle de cada uno y publicar tu propia reseña con un puntaje de 1 a 5 estrellas.
 
-## Get started
+Proyecto del **Avance N°1: Diseño UI/UX y Frontend Móvil** del curso Tecnologías Web y Móviles (Universidad de Los Lagos).
 
-1. Install dependencies
+- **Diseño en Figma:** https://www.figma.com/design/yktOt6tXWoLBhvcXe5eNsK/ExpGaming?node-id=0-1
+- **Bitácora del proyecto:** [docs/bitacora.md](docs/bitacora.md)
 
-   ```bash
-   npm install
-   ```
+## Pantallas
 
-2. Start the app
+| Inicio | Detalle del juego | Escribir reseña |
+|:---:|:---:|:---:|
+| ![Inicio](docs/img/app-inicio.png) | ![Detalle](docs/img/app-detalle.png) | ![Reseña](docs/img/app-resena.png) |
 
-   ```bash
-   npx expo start
-   ```
+1. **Inicio:** lista de juegos con buscador por título.
+2. **Detalle:** portada, datos del juego, descripción y reseñas de otros usuarios.
+3. **Escribir reseña:** formulario con nombre, puntaje y texto. Valida los campos antes de publicar, y la reseña nueva aparece de inmediato en el detalle.
 
-In the output, you'll find options to open the app in a
+## Tecnologías
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+- React Native con Expo (SDK 58)
+- Expo Router (navegación basada en archivos)
+- TypeScript
+- React Context para el estado compartido de juegos y reseñas
 
-You can start developing by editing the files inside the **src/app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+## Requisitos
 
-## Get a fresh project
+- Node.js (LTS reciente; probado con v26.13.1) y npm
+- App **Expo Go** en el teléfono, compatible con SDK 58
+- Teléfono y computador conectados a la misma red Wi-Fi
 
-When you're ready, run:
+## Cómo ejecutar
 
 ```bash
-npm run reset-project
+git clone https://github.com/BenjaminAlocilla2005/ExpGaming.git
+cd ExpGaming
+npm install
+npx expo start
 ```
 
-This command will move the starter code to the **example** directory and create a blank **src/app** directory where you can start developing.
+Luego escanea el código QR que aparece en la terminal con Expo Go.
 
-### Other setup steps
+## Estructura del proyecto
 
-- To set up ESLint for linting, run `npx expo lint`, or follow our guide on ["Using ESLint and Prettier"](https://docs.expo.dev/guides/using-eslint/)
-- If you'd like to set up unit testing, follow our guide on ["Unit Testing with Jest"](https://docs.expo.dev/develop/unit-testing/)
-- Learn more about the TypeScript setup in this template in our guide on ["Using TypeScript"](https://docs.expo.dev/guides/typescript/)
+```
+src/
+├── app/
+│   ├── _layout.tsx        # Navegación (Stack) y proveedor de estado
+│   ├── index.tsx          # Pantalla Inicio
+│   ├── juego/[id].tsx     # Pantalla Detalle
+│   └── resena/[id].tsx    # Pantalla Escribir reseña
+├── components/            # Componentes reutilizables
+│   ├── BotonPrimario.tsx
+│   ├── CampoTexto.tsx
+│   ├── EncabezadoPantalla.tsx
+│   ├── SelectorPuntaje.tsx
+│   └── TarjetaJuego.tsx
+├── constants/             # Colores, tipografía y medidas (iguales a Figma)
+├── context/
+│   └── JuegosContext.tsx  # Estado de juegos y función agregarResena
+└── data/
+    └── juegos.ts          # Datos de ejemplo
+```
 
-## Learn more
+## Autor
 
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+Benjamín Alocilla

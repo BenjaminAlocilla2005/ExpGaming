@@ -1,98 +1,79 @@
-import * as Device from 'expo-device';
-import { Platform, StyleSheet } from 'react-native';
+import { useState } from 'react';
+import { FlatList, StyleSheet, Text, TextInput } from 'react-native';
+import { useRouter } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { TarjetaJuego } from '@/components/TarjetaJuego';
+import { Colores } from '@/constants/colores';
+import { Medidas } from '@/constants/medidas';
+import { Tipografia } from '@/constants/tipografia';
+import { useJuegos } from '@/context/JuegosContext';
 
-import { AnimatedIcon } from '@/components/animated-icon';
-import { HintRow } from '@/components/hint-row';
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
-import { WebBadge } from '@/components/web-badge';
-import { BottomTabInset, MaxContentWidth, Spacing } from '@/constants/theme';
+export default function Inicio() {
+  const router = useRouter();
+  const { juegos } = useJuegos();
+  const [busqueda, setBusqueda] = useState('');
 
-function getDevMenuHint() {
-  if (Platform.OS === 'web') {
-    return <ThemedText type="small">use browser devtools</ThemedText>;
-  }
-  if (Device.isDevice) {
-    return (
-      <ThemedText type="small">
-        shake device or press <ThemedText type="code">m</ThemedText> in terminal
-      </ThemedText>
-    );
-  }
-  const shortcut = Platform.OS === 'android' ? 'cmd+m (or ctrl+m)' : 'cmd+d';
+  const juegosFiltrados = juegos.filter((j) =>
+    j.titulo.toLowerCase().includes(busqueda.trim().toLowerCase())
+  );
+
   return (
-    <ThemedText type="small">
-      press <ThemedText type="code">{shortcut}</ThemedText>
-    </ThemedText>
+    <SafeAreaView style={estilos.pantalla} edges={['top']}>
+      <Text style={estilos.titulo}>ExpGaming</Text>
+      <TextInput
+        style={estilos.buscador}
+        value={busqueda}
+        onChangeText={setBusqueda}
+        placeholder="Buscar juego..."
+        placeholderTextColor={Colores.textoSecundario}
+      />
+      <FlatList
+        data={juegosFiltrados}
+        keyExtractor={(juego) => juego.id}
+        renderItem={({ item }) => (
+          <TarjetaJuego
+            juego={item}
+            onPress={() => router.push(`/juego/${item.id}`)}
+          />
+        )}
+        ListEmptyComponent={
+          <Text style={estilos.vacio}>No hay juegos que coincidan.</Text>
+        }
+        contentContainerStyle={estilos.lista}
+      />
+    </SafeAreaView>
   );
 }
 
-export default function HomeScreen() {
-  return (
-    <ThemedView style={styles.container}>
-      <SafeAreaView style={styles.safeArea}>
-        <ThemedView style={styles.heroSection}>
-          <AnimatedIcon />
-          <ThemedText type="title" style={styles.title}>
-            Welcome to&nbsp;Expo
-          </ThemedText>
-        </ThemedView>
-
-        <ThemedText type="code" style={styles.code}>
-          get started
-        </ThemedText>
-
-        <ThemedView type="backgroundElement" style={styles.stepContainer}>
-          <HintRow
-            title="Try editing"
-            hint={<ThemedText type="code">src/app/index.tsx</ThemedText>}
-          />
-          <HintRow title="Dev tools" hint={getDevMenuHint()} />
-          <HintRow
-            title="Fresh start"
-            hint={<ThemedText type="code">npm run reset-project</ThemedText>}
-          />
-        </ThemedView>
-
-        {Platform.OS === 'web' && <WebBadge />}
-      </SafeAreaView>
-    </ThemedView>
-  );
-}
-
-const styles = StyleSheet.create({
-  container: {
+const estilos = StyleSheet.create({
+  pantalla: {
     flex: 1,
-    justifyContent: 'center',
-    flexDirection: 'row',
+    paddingHorizontal: Medidas.espacio,
+    backgroundColor: Colores.fondo,
   },
-  safeArea: {
-    flex: 1,
-    paddingHorizontal: Spacing.four,
-    alignItems: 'center',
-    gap: Spacing.three,
-    paddingBottom: BottomTabInset + Spacing.three,
-    maxWidth: MaxContentWidth,
-  },
-  heroSection: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    flex: 1,
-    paddingHorizontal: Spacing.four,
-    gap: Spacing.four,
-  },
-  title: {
+  titulo: {
+    ...Tipografia.titulo,
+    marginTop: 8,
+    marginBottom: 16,
     textAlign: 'center',
+    color: Colores.textoPrincipal,
   },
-  code: {
-    textTransform: 'uppercase',
+  buscador: {
+    minHeight: Medidas.tactilMinimo,
+    paddingHorizontal: 12,
+    marginBottom: 16,
+    borderRadius: Medidas.radio,
+    backgroundColor: Colores.superficie,
+    color: Colores.textoPrincipal,
+    ...Tipografia.cuerpo,
   },
-  stepContainer: {
-    gap: Spacing.three,
-    alignSelf: 'stretch',
-    paddingHorizontal: Spacing.three,
-    paddingVertical: Spacing.four,
-    borderRadius: Spacing.four,
+  lista: {
+    paddingBottom: 24,
+  },
+  vacio: {
+    ...Tipografia.cuerpo,
+    marginTop: 24,
+    textAlign: 'center',
+    color: Colores.textoSecundario,
   },
 });

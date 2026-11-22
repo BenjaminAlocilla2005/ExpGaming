@@ -6,6 +6,7 @@
 - Diseño en Figma: https://www.figma.com/design/yktOt6tXWoLBhvcXe5eNsK/ExpGaming?node-id=0-1
 - Repositorio: https://github.com/BenjaminAlocilla2005/ExpGaming
 
+
 ExpGaming es una app móvil de reseñas de videojuegos: el usuario explora un catálogo, lee el detalle de cada juego y publica su propia reseña con puntaje.
 
 ---

@@ -6,6 +6,7 @@ Proyecto del **Avance N°1: Diseño UI/UX y Frontend Móvil** del curso Tecnolog
 
 - **Diseño en Figma:** https://www.figma.com/design/yktOt6tXWoLBhvcXe5eNsK/ExpGaming?node-id=0-1
 - **Bitácora del proyecto:** [docs/bitacora.md](docs/bitacora.md)
+- **Prototipo interactivo:** https://www.figma.com/proto/yktOt6tXWoLBhvcXe5eNsK/ExpGaming?node-id=33-166&p=f&t=H9YWM4rEjVZOzW1C-1&scaling=min-zoom&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=33%3A166
 
 ## Pantallas
 
